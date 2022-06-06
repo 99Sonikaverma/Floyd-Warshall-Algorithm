@@ -1,0 +1,71 @@
+<script>
+	var INFINITY = 99999;
+	class AllPairShortestPath {
+		constructor() {
+		this.Vertex = 4;
+		}
+
+		floydWarshall(graphs) {
+		var distance = Array.from(Array(this.Vertex), () => new Array(this.Vertex).fill(0));
+		var i, j, k;
+
+			for (i = 0; i < this.Vertex; i++) {
+			for (j = 0; j < this.Vertex; j++) {
+			distance[i][j] = graphs[i][j];
+			}
+		}
+
+			for (k = 0; k < this.Vertex; k++) {
+			for (i = 0; i < this.Vertex; i++) {
+			for (j = 0; j < this.Vertex; j++) {				if (distance[i][k] + distance[k][j] < distance[i][j]) {
+				distance[i][j] = distance[i][k] + distance[k][j];
+				}
+			}
+			}
+		}
+
+		this.printSolution(distance);
+		}
+
+		printSolution(distance) {
+		document.write(
+			"Following matrix shows the shortest " +
+			"distances between every pair of vertices<br>"
+		);
+		for (var i = 0; i < this.Vertex; ++i) {
+			for (var j = 0; j < this.Vertex; ++j) {
+			if (distance[i][j] == INFINITY) {
+				document.write(" INFINITY ");
+			} else {
+				document.write("  " + distance[i][j] + " ");
+			}
+			}
+
+			document.write("<br>");
+		}
+		}
+	}
+	// Driver Code
+	/* Let us create the following
+		weighted graph
+			10
+		(0)------->(3)
+		|		 /|\
+		5 |		 |
+		|		 | 1
+		\|/		 |
+		(1)------->(2)
+			3			 */
+	var graphs = [
+		[0, 5, INFINITY, 10],
+		[INFINITY, 0, 3, INFINITY],
+		[INFINITY, INFINITY, 0, 1],
+		[INFINITY, INFINITY, INFINITY, 0],
+	];
+
+	var a = new AllPairShortestPath();
+
+	// Print the solution
+	a.floydWarshall(graphs);
+	
+</script>
